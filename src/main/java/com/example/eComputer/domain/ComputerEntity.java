@@ -6,8 +6,7 @@ import jakarta.persistence.GenerationType;
 import lombok.*;
 import org.springframework.data.annotation.Id;
 
-@Getter
-@Setter
+@Data
 @Builder
 @EqualsAndHashCode
 @NoArgsConstructor
