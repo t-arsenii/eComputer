@@ -1,4 +1,4 @@
-package com.example.eComputer.domain;
+package com.example.eComputer.dto;
 
 import jakarta.persistence.Entity;
 import lombok.AllArgsConstructor;
@@ -12,6 +12,6 @@ public class ComputerPartDTO {
     private String title;
     private String description;
     private Double price;
-    private ComputerPartType type;
+    private String type;
     private int amountLeft;
 }

@@ -1,6 +1,8 @@
 package com.example.eComputer.controller;
 
+import com.example.eComputer.dto.ComputerPartDTO;
 import com.example.eComputer.domain.ComputerPartEntity;
+import com.example.eComputer.domain.ComputerPartType;
 import com.example.eComputer.service.ComputerPartService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -29,13 +31,27 @@ public class ComputerPartController {
     }
 
     @PostMapping
-    public ResponseEntity<ComputerPartEntity> createComputerPart(@RequestBody ComputerPartEntity computerPart) {
+    public ResponseEntity<ComputerPartEntity> createComputerPart(@RequestBody ComputerPartDTO computerPartDTO) {
+        ComputerPartEntity computerPart = new ComputerPartEntity();
+
+        computerPart.setTitle(computerPartDTO.getTitle());
+        computerPart.setPrice(computerPartDTO.getPrice());
+        computerPart.setDescription(computerPartDTO.getDescription());
+        computerPart.setType(ComputerPartType.valueOf(computerPartDTO.getType()));
+        computerPart.setAmountLeft(computerPartDTO.getAmountLeft());
         ComputerPartEntity savedPart = computerPartService.createComputerPart(computerPart);
         return ResponseEntity.status(HttpStatus.CREATED).body(savedPart);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<ComputerPartEntity> updateComputerPart(@PathVariable Long id, @RequestBody ComputerPartEntity updatedPart) {
+    public ResponseEntity<ComputerPartEntity> updateComputerPart(@PathVariable Long id, @RequestBody ComputerPartDTO updatedPartDTO) {
+        ComputerPartEntity updatedPart = new ComputerPartEntity();
+        updatedPart.setTitle(updatedPartDTO.getTitle());
+        updatedPart.setPrice(updatedPartDTO.getPrice());
+        updatedPart.setDescription(updatedPartDTO.getDescription());
+        updatedPart.setType(ComputerPartType.valueOf(updatedPartDTO.getType()));
+        updatedPart.setAmountLeft(updatedPartDTO.getAmountLeft());
+
         Optional<ComputerPartEntity> partOptional = computerPartService.updateComputerPart(id, updatedPart);
         return partOptional.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
     }
