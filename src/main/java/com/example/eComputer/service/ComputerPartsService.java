@@ -2,18 +2,15 @@ package com.example.eComputer.service;
 
 import com.example.eComputer.domain.ComputerPartEntity;
 import com.example.eComputer.repository.ComputerPartRepository;
-import jakarta.persistence.Access;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
 @Service
 @Transactional
-public class ComputerPartsServiceImp implements ComputerPartService{
+public class ComputerPartsService {
     @Autowired
     ComputerPartRepository computerPartRepository;
 

@@ -29,5 +29,5 @@ public class ComputerBuildEntity {
     private String description;
     private Double totalPrice;
     private LocalDateTime creationDate;
-    private String status;
+    private String deliverAdderss;
 }

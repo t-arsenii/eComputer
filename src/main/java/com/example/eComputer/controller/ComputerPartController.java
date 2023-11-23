@@ -3,7 +3,7 @@ package com.example.eComputer.controller;
 import com.example.eComputer.dto.ComputerPartDTO;
 import com.example.eComputer.domain.ComputerPartEntity;
 import com.example.eComputer.domain.ComputerPartType;
-import com.example.eComputer.service.ComputerPartService;
+import com.example.eComputer.service.ComputerPartsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -17,7 +17,7 @@ import java.util.Optional;
 public class ComputerPartController {
 
     @Autowired
-    private ComputerPartService computerPartService;
+    private ComputerPartsService computerPartService;
 
     @GetMapping
     public List<ComputerPartEntity> getAllComputerParts() {
