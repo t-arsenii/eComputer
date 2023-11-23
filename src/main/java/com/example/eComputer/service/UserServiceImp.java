@@ -1,6 +1,7 @@
 package com.example.eComputer.service;
 
 import com.example.eComputer.domain.UserEntity;
+import com.example.eComputer.domain.enums.Role;
 import com.example.eComputer.repository.UserRepository;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,6 +30,15 @@ public class UserServiceImp implements UserService{
 
     @Override
     public UserEntity save(UserEntity student) {
+
         return null;
+    }
+
+    @Override
+    public boolean createUser(UserEntity student) {
+        if (userRepository.findByEmail(student.getEmail())!= null) return false;
+        student.setActive(true);
+        student.getRoles().add(Role.ROLE_USER);
+
     }
 }

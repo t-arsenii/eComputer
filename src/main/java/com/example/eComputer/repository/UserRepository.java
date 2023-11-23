@@ -15,4 +15,6 @@ public interface UserRepository extends JpaRepository<UserEntity, Long> {
     public List<UserEntity> findAll();
     public UserEntity findByBirthdayAfter(Date date);
     public UserEntity findByBirthdayBeforeAndName(Date date, String name);
+
+    UserEntity findByEmail (String email);
 }

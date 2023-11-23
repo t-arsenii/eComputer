@@ -11,4 +11,6 @@ public interface UserService{
     public List<UserEntity> getAllUsers();
     public boolean exists(String email);
     public UserEntity save(UserEntity student);
+
+
 }
