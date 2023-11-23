@@ -33,12 +33,10 @@ public class UserServiceImp implements UserService{
 
         return null;
     }
-
-    @Override
     public boolean createUser(UserEntity student) {
         if (userRepository.findByEmail(student.getEmail())!= null) return false;
         student.setActive(true);
         student.getRoles().add(Role.ROLE_USER);
-
+        return true;
     }
 }
