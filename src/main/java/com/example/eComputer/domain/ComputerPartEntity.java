@@ -1,15 +1,15 @@
 package com.example.eComputer.domain;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.util.Set;
 
-@Data
 @NoArgsConstructor
 @AllArgsConstructor
+@Getter
+@Setter
 @Entity(name = "Computer_parts")
 public class ComputerPartEntity {
     @Id
@@ -20,7 +20,7 @@ public class ComputerPartEntity {
     private Double price;
     private ComputerPartType type;
     private int amountLeft;
-
+    @JsonBackReference
     @ManyToMany(mappedBy = "parts")
     private Set<ComputerBuildEntity> computers;
 }

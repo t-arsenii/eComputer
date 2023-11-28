@@ -40,4 +40,38 @@ public class ComputerBuildController {
         ComputerBuildEntity savedBuild = computerBuildService.createComputerBuild(computerBuild);
         return ResponseEntity.status(HttpStatus.CREATED).body(savedBuild);
     }
+
+    @PostMapping("/{buildId}/addPart/{partId}")
+    public ResponseEntity<ComputerBuildEntity> addPartToBuild(
+            @PathVariable Long buildId,
+            @PathVariable Long partId
+    ) {
+        try {
+            ComputerBuildEntity updatedBuild = computerBuildService.addPartToBuild(buildId, partId);
+            return ResponseEntity.ok(updatedBuild);
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.notFound().build();
+        } catch (IllegalStateException e) {
+            return ResponseEntity.badRequest().build();
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        }
+    }
+    @DeleteMapping("/{buildId}/removePart/{partId}")
+    public ResponseEntity<ComputerBuildEntity> removePartFromBuild(
+            @PathVariable Long buildId,
+            @PathVariable Long partId
+    ) {
+        try {
+            boolean isRemoved = computerBuildService.removePartFromBuild(buildId, partId);
+            return isRemoved ? ResponseEntity.noContent().build() : ResponseEntity.notFound().build();
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.notFound().build();
+        } catch (IllegalStateException e) {
+            return ResponseEntity.badRequest().build();
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        }
+    }
+
 }
