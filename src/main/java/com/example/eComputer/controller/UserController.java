@@ -23,6 +23,10 @@ public class UserController {
         UserEntity saved = userService.save(user);
         return new ResponseEntity<>(saved, status);
     }
+    @GetMapping("/registration")
+    public String registration(){
+        return "registration";
+    }
     @GetMapping("/students")
     public List<UserEntity> getAllStudents() {
         return userService.getAllUsers();

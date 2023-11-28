@@ -4,8 +4,10 @@ import com.example.eComputer.domain.UserEntity;
 import com.example.eComputer.domain.enums.Role;
 import com.example.eComputer.repository.UserRepository;
 import jakarta.transaction.Transactional;
+import org.apache.juli.logging.Log;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import lombok.extern.slf4j.Slf4j;
 
 import java.util.List;
 @Service
@@ -33,8 +35,10 @@ public class UserServiceImp implements UserService{
 
         return null;
     }
+
     public boolean createUser(UserEntity student) {
-        if (userRepository.findByEmail(student.getEmail())!= null) return false;
+        String email = student.getEmail();
+        if (userRepository.findByEmail(email)!= null) return false;
         student.setActive(true);
         student.getRoles().add(Role.ROLE_USER);
         return true;
