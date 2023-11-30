@@ -13,7 +13,7 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("/parts")
+@RequestMapping("/api/parts")
 public class ComputerPartController {
 
     @Autowired
