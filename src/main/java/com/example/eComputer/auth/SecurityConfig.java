@@ -2,6 +2,7 @@ package com.example.eComputer.auth;
 import com.example.eComputer.service.UserServiceImp;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.core.annotation.Order;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -33,17 +34,31 @@ public class SecurityConfig {
 
 
     @Bean
-    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+    @Order(1)
+    public SecurityFilterChain apiFilterChain(HttpSecurity http) throws Exception {
 
         http
                 .securityMatcher("/api/**")
                 .authorizeHttpRequests(authorize -> authorize
-                        .requestMatchers().permitAll()
                         .anyRequest().hasRole("USER")
                 )
                 .httpBasic(withDefaults());
         return http.build();
     }
+
+    @Bean
+    public SecurityFilterChain loginFilterChain(HttpSecurity http) throws Exception {
+
+        http
+                .securityMatcher("/login/**")
+                .authorizeHttpRequests(authorize -> authorize
+                        .anyRequest().permitAll()
+                )
+                .httpBasic(withDefaults());
+        return http.build();
+    }
+
+
 
 
     @SuppressWarnings("deprecation")
