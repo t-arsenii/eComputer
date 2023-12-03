@@ -11,6 +11,6 @@ public interface UserService{
 //    public UserEntity getStudentByName(String name);
     public List<UserEntity> getAllUsers();
     public boolean exists(String email);
-    public UserEntity save(UserEntity student);
+    public boolean save(UserEntity student);
 
 }

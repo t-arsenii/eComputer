@@ -14,6 +14,8 @@ import org.springframework.http.HttpMethod;
 
 import static org.springframework.security.config.Customizer.withDefaults;
 import static org.springframework.security.config.http.MatcherType.mvc;
+
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.security.web.servlet.util.matcher.MvcRequestMatcher;
 @Configuration
 @EnableWebSecurity
@@ -37,29 +39,15 @@ public class SecurityConfig {
     @Order(1)
     public SecurityFilterChain apiFilterChain(HttpSecurity http) throws Exception {
 
-        http
-                .securityMatcher("/api/**")
-                .authorizeHttpRequests(authorize -> authorize
-                        .anyRequest().hasRole("USER")
-                )
-                .httpBasic(withDefaults());
+        http.csrf().disable()
+                .authorizeRequests()
+                .requestMatchers("/users/**").permitAll()
+                .anyRequest().authenticated()
+                .and().sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+                .and().addFilterBefore(jwtAuthorizationFilter, UsernamePasswordAuthenticationFilter.class);
+
         return http.build();
     }
-
-    @Bean
-    public SecurityFilterChain loginFilterChain(HttpSecurity http) throws Exception {
-
-        http
-                .securityMatcher("/login/**")
-                .authorizeHttpRequests(authorize -> authorize
-                        .anyRequest().permitAll()
-                )
-                .httpBasic(withDefaults());
-        return http.build();
-    }
-
-
-
 
     @SuppressWarnings("deprecation")
     @Bean

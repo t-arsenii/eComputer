@@ -3,6 +3,7 @@ package com.example.eComputer.controller;
 import com.example.eComputer.auth.JwtUtil;
 import com.example.eComputer.domain.UserEntity;
 import com.example.eComputer.domain.request.LoginRequest;
+import com.example.eComputer.domain.request.SignupRequest;
 import com.example.eComputer.domain.response.ErrorResponse;
 import com.example.eComputer.domain.response.LoginResponse;
 import com.example.eComputer.service.UserService;
@@ -19,7 +20,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/users")
+@RequestMapping("/users")
 public class UserController {
     @Autowired
     private UserService userService;
@@ -28,18 +29,19 @@ public class UserController {
 
     @Autowired
     private JwtUtil jwtUtil;
+    @PostMapping("/registration")
+    public ResponseEntity<String> registration(@RequestBody SignupRequest signupRequest) {
+        UserEntity newUser = new UserEntity();
+        newUser.setName(signupRequest.getName());
+        newUser.setEmail(signupRequest.getEmail());
+        newUser.setPassword(signupRequest.getPassword());
 
-    @PostMapping
-    public ResponseEntity<UserEntity>
-    createStudent(@RequestBody UserEntity user) {
-        HttpStatus status = HttpStatus.CREATED;
-        UserEntity saved = userService.save(user);
-        return new ResponseEntity<>(saved, status);
-    }
-
-    @GetMapping("/registration")
-    public String registration() {
-        return "registration";
+        boolean isUserCreated = userService.save(newUser);
+        if (isUserCreated) {
+            return ResponseEntity.ok("User registered successfully!");
+        } else {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Failed to register user.");
+        }
     }
 
     @GetMapping

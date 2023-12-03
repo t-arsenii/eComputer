@@ -24,7 +24,6 @@ public class UserEntity implements UserDetails {
     private String name;
     private String email;
     private String password;
-    private Date birthday;
 
     private boolean active;
     @ElementCollection (targetClass = Role.class, fetch =  FetchType.EAGER)

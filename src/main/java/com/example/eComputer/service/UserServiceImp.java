@@ -36,9 +36,13 @@ public class UserServiceImp implements UserService, UserDetailsService {
     }
 
     @Override
-    public UserEntity save(UserEntity student) {
-
-        return null;
+    public boolean save(UserEntity user) {
+        try {
+            userRepository.save(user);
+            return true;
+        } catch (Exception e) {
+            return false;
+        }
     }
 
     public boolean createUser(UserEntity student) {
