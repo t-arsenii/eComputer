@@ -1,23 +1,22 @@
 package com.example.eComputer.domain;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.time.LocalDateTime;
 import java.util.Set;
 
 
-@Data
-@NoArgsConstructor
 @AllArgsConstructor
+@Getter
+@Setter
 @Entity(name = "Computer_builds")
 public class ComputerBuildEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-
+    @JsonManagedReference
     @ManyToMany
     @JoinTable(
             name = "Computer_Build_Parts",
@@ -29,5 +28,10 @@ public class ComputerBuildEntity {
     private String description;
     private Double totalPrice;
     private LocalDateTime creationDate;
-    private String status;
+    private String deliverAdderss;
+
+    public ComputerBuildEntity() {
+        creationDate = LocalDateTime.now();
+        totalPrice = 0.0;
+    }
 }
