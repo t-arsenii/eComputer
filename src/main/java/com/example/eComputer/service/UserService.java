@@ -2,6 +2,7 @@ package com.example.eComputer.service;
 import com.example.eComputer.domain.UserEntity;
 import com.example.eComputer.repository.UserRepository;
 import jakarta.transaction.Transactional;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
@@ -12,5 +13,6 @@ public interface UserService{
     public List<UserEntity> getAllUsers();
     public boolean exists(String email);
     public boolean save(UserEntity student);
+    public boolean addAdmin(UserEntity user);
 
 }

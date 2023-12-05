@@ -39,25 +39,29 @@ public class UserServiceImp implements UserService, UserDetailsService {
     public boolean save(UserEntity user) {
         try {
             userRepository.save(user);
+            user.setActive(true);
+            user.getRoles().add(Role.USER);
+            return true;
+        } catch (Exception e) {
+            return false;
+        }
+    }
+    @Override
+    public boolean addAdmin(UserEntity user) {
+        try {
+            user.setActive(true);
+            user.getRoles().add(Role.ADMIN);
             return true;
         } catch (Exception e) {
             return false;
         }
     }
 
-    public boolean createUser(UserEntity student) {
-        String email = student.getEmail();
-        if (userRepository.findByEmail(email)!= null) return false;
-        student.setActive(true);
-        student.getRoles().add(Role.ROLE_USER);
-        return true;
-    }
-
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
         UserEntity user = userRepository.findByEmail(email);
-        List<String> roles = new ArrayList<>();
-        roles.add("USER");
+        List<String> roles;
+        roles = new ArrayList<>(user.getRoles()).stream().map(role -> role.getAuthority()).toList();
         UserDetails userDetails =
                 org.springframework.security.core.userdetails.User.builder()
                         .username(user.getEmail())

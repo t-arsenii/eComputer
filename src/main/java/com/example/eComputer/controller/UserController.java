@@ -48,6 +48,17 @@ public class UserController {
     public List<UserEntity> getAllStudents() {
         return userService.getAllUsers();
     }
+    @PostMapping("addAdmin/{id}")
+    public ResponseEntity addAdmin(@PathVariable Long id){
+        try{
+            UserEntity user = userService.getUserById(id);
+            userService.addAdmin(user);
+            return ResponseEntity.ok("Admin role added");
+        }catch (Exception e){
+            ErrorResponse errorResponse = new ErrorResponse(HttpStatus.BAD_REQUEST, e.getMessage());
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errorResponse);
+        }
+    }
 
     @ResponseBody
     @RequestMapping(value = "/login",method = RequestMethod.POST)
