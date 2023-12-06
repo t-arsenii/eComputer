@@ -2,8 +2,10 @@ package com.example.eComputer.service;
 
 import com.example.eComputer.domain.ComputerBuildEntity;
 import com.example.eComputer.domain.ComputerPartEntity;
+import com.example.eComputer.domain.UserEntity;
 import com.example.eComputer.repository.ComputerBuildRepository;
 import com.example.eComputer.repository.ComputerPartRepository;
+import com.example.eComputer.repository.UserRepository;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -34,7 +36,8 @@ public class ComputerBuildService {
         return computerBuildRepository.findById(id);
     }
 
-    public ComputerBuildEntity createComputerBuild(ComputerBuildEntity computerBuild) {
+    public ComputerBuildEntity createComputerBuild(ComputerBuildEntity computerBuild, UserEntity user) {
+        computerBuild.setUser(user);
         return computerBuildRepository.save(computerBuild);
     }
 

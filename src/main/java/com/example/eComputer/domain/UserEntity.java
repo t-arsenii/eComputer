@@ -2,6 +2,7 @@ package com.example.eComputer.domain;
 
 
 import com.example.eComputer.domain.enums.Role;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.*;
 import org.springframework.security.core.GrantedAuthority;
@@ -32,7 +33,9 @@ public class UserEntity implements UserDetails {
     @Enumerated(EnumType.STRING)
     private Set<Role> roles= new HashSet<>();
     private LocalDateTime dateOfCreated;
-
+    @OneToMany(mappedBy = "user")
+    @JsonBackReference
+    private Set<ComputerBuildEntity> computers;
     @PrePersist
     private void init() {
         dateOfCreated = LocalDateTime.now();

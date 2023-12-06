@@ -3,6 +3,7 @@ package com.example.eComputer.domain;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.*;
+import org.springframework.security.core.userdetails.User;
 
 import java.time.LocalDateTime;
 import java.util.Set;
@@ -29,7 +30,9 @@ public class ComputerBuildEntity {
     private Double totalPrice;
     private LocalDateTime creationDate;
     private String deliverAdderss;
-
+    @JsonManagedReference
+    @ManyToOne
+    private UserEntity user;
     public ComputerBuildEntity() {
         creationDate = LocalDateTime.now();
         totalPrice = 0.0;

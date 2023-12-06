@@ -42,6 +42,8 @@ public class SecurityConfig {
         http.csrf().disable()
                 .authorizeRequests()
                 .requestMatchers("/users/**").permitAll()
+                .requestMatchers("/api/builds/**").hasAuthority("USER")
+                .requestMatchers("/api/parts/**").hasAuthority("ADMIN")
                 .anyRequest().authenticated()
                 .and().sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and().addFilterBefore(jwtAuthorizationFilter, UsernamePasswordAuthenticationFilter.class);
