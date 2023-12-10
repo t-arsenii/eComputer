@@ -8,7 +8,7 @@ import org.springframework.security.core.userdetails.User;
 import java.time.LocalDateTime;
 import java.util.Set;
 
-
+//Single responsibility
 @AllArgsConstructor
 @Getter
 @Setter

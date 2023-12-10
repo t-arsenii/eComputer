@@ -1,12 +1,9 @@
 package com.example.eComputer.controller;
 
 import com.example.eComputer.domain.ComputerBuildEntity;
-import com.example.eComputer.domain.ComputerPartEntity;
-import com.example.eComputer.domain.ComputerPartType;
 import com.example.eComputer.domain.UserEntity;
 import com.example.eComputer.dto.ComputerBuildDTO;
-import com.example.eComputer.dto.ComputerPartDTO;
-import com.example.eComputer.service.ComputerBuildService;
+import com.example.eComputer.service.ComputerBuildServiceImp;
 import com.example.eComputer.service.UserServiceImp;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -21,9 +18,9 @@ import java.util.Optional;
 @RestController
 @RequestMapping("api/builds")
 public class ComputerBuildController {
+    //dependency inversion
     @Autowired
-    ComputerBuildService computerBuildService;
-
+    ComputerBuildServiceImp computerBuildService;
     @Autowired
     UserServiceImp userService;
     @GetMapping
@@ -32,13 +29,13 @@ public class ComputerBuildController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<ComputerBuildEntity> getComputerPartById(@PathVariable Long id) {
+    public ResponseEntity<ComputerBuildEntity> getComputerBuildById(@PathVariable Long id) {
         Optional<ComputerBuildEntity> partOptional = computerBuildService.getComputerBuildById(id);
         return partOptional.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
     }
 
     @PostMapping
-    public ResponseEntity<ComputerBuildEntity> createComputerPart(@RequestBody ComputerBuildDTO computerBuildDTO) {
+    public ResponseEntity<ComputerBuildEntity> createComputerBuild(@RequestBody ComputerBuildDTO computerBuildDTO) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         if (authentication == null || !authentication.isAuthenticated()) {
             return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
