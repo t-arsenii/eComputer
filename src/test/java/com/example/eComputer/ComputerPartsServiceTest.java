@@ -2,7 +2,7 @@ package com.example.eComputer;
 import com.example.eComputer.domain.ComputerPartEntity;
 import com.example.eComputer.domain.ComputerPartType;
 import com.example.eComputer.repository.ComputerPartRepository;
-import com.example.eComputer.service.ComputerPartsService;
+import com.example.eComputer.service.ComputerPartsServiceImp;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
@@ -27,7 +27,7 @@ public class ComputerPartsServiceTest {
     private ComputerPartRepository computerPartRepository;
 
     @InjectMocks
-    private ComputerPartsService computerPartsService;
+    private ComputerPartsServiceImp computerPartsService;
 
     @Test
     public void testGetAllComputerParts() {

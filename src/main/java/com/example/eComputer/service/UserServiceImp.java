@@ -21,7 +21,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 @Service
 @Transactional
-public class UserServiceImp implements UserService, UserDetailsService {
+public class UserServiceImp implements UserService{
     @Autowired
     private UserRepository userRepository;
     @Override

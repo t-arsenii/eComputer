@@ -52,22 +52,4 @@ public class UserControllerIntegrationTest {
                 .andExpect(jsonPath("$.email").value("john.doe@example.com"))
                 .andExpect(jsonPath("$.token").isNotEmpty());
     }
-
-//    @Test
-//    @WithMockUser(username = "admin@example.com", roles = {"ADMIN"})
-//    public void testAddAdmin() throws Exception {
-//        SignupRequest signupRequest = new SignupRequest("Admin User", "admin@example.com", "adminPassword");
-//
-//        MvcResult result = mockMvc.perform(post("/users/registration")
-//                        .contentType(MediaType.APPLICATION_JSON)
-//                        .content(objectMapper.writeValueAsString(signupRequest)))
-//                .andReturn();
-//
-//        String content = result.getResponse().getContentAsString();
-//        Long userId = Long.parseLong(content);
-//
-//        mockMvc.perform(post("/users/addAdmin/{id}", userId))
-//                .andExpect(status().isOk())
-//                .andExpect(content().string("Admin role added"));
-//    }
 }

@@ -1,5 +1,6 @@
 package com.example.eComputer.auth;
 import com.example.eComputer.service.UserServiceImp;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.annotation.Order;
@@ -8,7 +9,9 @@ import org.springframework.security.config.annotation.authentication.builders.Au
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.NoOpPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.http.HttpMethod;
 
@@ -27,10 +30,10 @@ public class SecurityConfig {
         this.jwtAuthorizationFilter = jwtAuthorizationFilter;
     }
     @Bean
-    public AuthenticationManager authenticationManager(HttpSecurity http, NoOpPasswordEncoder noOpPasswordEncoder)
+    public AuthenticationManager authenticationManager(HttpSecurity http, PasswordEncoder passwordEncoder)
             throws Exception {
         AuthenticationManagerBuilder authenticationManagerBuilder = http.getSharedObject(AuthenticationManagerBuilder.class);
-        authenticationManagerBuilder.userDetailsService(userDetailsService).passwordEncoder(noOpPasswordEncoder);
+        authenticationManagerBuilder.userDetailsService(userDetailsService).passwordEncoder(passwordEncoder);
         return authenticationManagerBuilder.build();
     }
 
@@ -42,6 +45,7 @@ public class SecurityConfig {
         http.csrf().disable()
                 .authorizeRequests()
                 .requestMatchers("/users/**").permitAll()
+                .requestMatchers(HttpMethod.GET,"/api/parts/**").permitAll()
                 .requestMatchers("/api/builds/**").hasAuthority("USER")
                 .requestMatchers("/api/parts/**").hasAuthority("ADMIN")
                 .anyRequest().authenticated()
@@ -51,9 +55,9 @@ public class SecurityConfig {
         return http.build();
     }
 
-    @SuppressWarnings("deprecation")
     @Bean
-    public NoOpPasswordEncoder passwordEncoder() {
-        return (NoOpPasswordEncoder) NoOpPasswordEncoder.getInstance();
+    public PasswordEncoder passwordEncoder() {
+        return new BCryptPasswordEncoder();
     }
+
 }

@@ -7,14 +7,11 @@ import org.springframework.stereotype.Repository;
 
 import java.util.Date;
 import java.util.List;
-
+//Interface segregation
 @Repository
 @Transactional
 public interface UserRepository extends JpaRepository<UserEntity, Long> {
     public UserEntity findByName(String firstName);
     public List<UserEntity> findAll();
-//    public UserEntity findByBirthdayAfter(Date date);
-//    public UserEntity findByBirthdayBeforeAndName(Date date, String name);
-
     UserEntity findByEmail (String email);
 }

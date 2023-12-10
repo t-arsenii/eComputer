@@ -16,6 +16,7 @@ import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import java.util.List;
 
@@ -34,8 +35,11 @@ public class UserController {
         UserEntity newUser = new UserEntity();
         newUser.setName(signupRequest.getName());
         newUser.setEmail(signupRequest.getEmail());
-        newUser.setPassword(signupRequest.getPassword());
 
+        BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+        String hashedPassword = passwordEncoder.encode(signupRequest.getPassword());
+
+        newUser.setPassword(hashedPassword);
         boolean isUserCreated = userService.save(newUser);
         if (isUserCreated) {
             return ResponseEntity.ok("User registered successfully!");
